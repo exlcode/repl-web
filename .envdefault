@@ -1,0 +1,5 @@
+# This should always be set to the production signalling server, unless testing a local signalling server
+SIGNAL_API_URL=https://wsenv-signalling-api.exlcode.com/v0/connect
+# These should remain empty for production and dev, unless you need to test a local WSENV server
+WS_URL=
+SHAREDB_URL=

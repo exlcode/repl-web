@@ -1,0 +1,29 @@
+{
+  "extends": [
+    "tslint-eslint-rules",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "jsx-no-lambda": 0,
+    "jsx-no-multiline-js": false,
+    "jsx-self-close": 2,
+    "jsx-no-string-ref": 2,
+    "jsx-alignment": 2,
+    "no-extra-boolean-cast": false,
+    "ter-prefer-arrow-callback": [true],
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
+    "ter-arrow-body-style": [
+      2,
+      "as-needed"
+    ],
+    "no-console": [
+      false
+    ],
+    "prefer-template": true
+  }
+}
