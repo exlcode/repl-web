@@ -2,7 +2,7 @@ import { SIGNAL_API_URL, WS_URL } from '../utils/constants'
 import { requestStore, eventStore } from './store'
 import { MESSAGE_TYPES } from 'wsenv/constants'
 import axios from 'axios'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+const ReconnectingWebSocket = require('reconnecting-websocket').default
 
 const wsUrlProvider = async () => {
   if (WS_URL) {
