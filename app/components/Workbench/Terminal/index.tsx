@@ -35,6 +35,7 @@ interface IProps {}
 class Terminal extends React.Component<IProps & FreactalProps, {}> {
   terminal: Xterm
   instanceId: string
+  registeredListener: boolean
 
   componentWillReceiveProps(nextProps: IProps & FreactalProps) {
     const { state: { dragging, terminalView } } = nextProps
@@ -68,6 +69,7 @@ class Terminal extends React.Component<IProps & FreactalProps, {}> {
   }
 
   unregisterHandlers() {
+    this.registeredListener = false
     this.terminal.off('resize', this.termResizeHandler)
     this.terminal.off('key', this.termKeyHandler)
     this.terminal.off('paste', this.termKeyHandler)
@@ -76,6 +78,10 @@ class Terminal extends React.Component<IProps & FreactalProps, {}> {
   }
 
   registerHandlers() {
+    if (this.registeredListener) {
+      return
+    }
+    this.registeredListener = true
     this.terminal.on('resize', this.termResizeHandler)
     this.terminal.on('key', this.termKeyHandler)
     this.terminal.on('paste', this.termKeyHandler)

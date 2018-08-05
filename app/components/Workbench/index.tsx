@@ -10,8 +10,11 @@ import Terminal from './Terminal'
 import Preview from './Preview'
 import ServerInfo from './ServerInfo'
 
-const tabs: Tab[] = ['Terminal', 'Preview', 'Server Info']
-type Tab = 'Terminal' | 'Preview' | 'Server Info'
+// const tabs: Tab[] = ['Terminal', 'Preview', 'Server Info']
+// type Tab = 'Terminal' | 'Preview' | 'Server Info'
+
+const tabs: Tab[] = ['Terminal']
+type Tab = 'Terminal'
 
 interface IProps {}
 interface IState {
@@ -45,8 +48,8 @@ export default class Workbench extends React.Component<IProps, IState> {
         </TabHeader>
         <Content>
           {currentTab === 'Terminal' && <Terminal />}
-          {currentTab === 'Preview' && <Preview />}
-          {currentTab === 'Server Info' && <ServerInfo />}
+          {/*{currentTab === 'Preview' && <Preview />}*/}
+          {/*{currentTab === 'Server Info' && <ServerInfo />}*/}
         </Content>
       </FullSize>
     )

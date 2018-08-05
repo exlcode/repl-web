@@ -65,6 +65,9 @@ class Header extends React.Component<IProps & FreactalProps, IStates> {
 
   handleRunClick = () => {
     if (this.props.instanceId) {
+      if (!this.props.terminalView) {
+        this.props.effects.setMixedView()
+      }
       sendTTYKeystroke(
         this.props.instanceId,
         environmentKeyConfig[this.props.workspace.environmentKey].execCmd(
