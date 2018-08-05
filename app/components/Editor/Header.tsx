@@ -127,7 +127,7 @@ class Header extends React.Component<IProps & FreactalProps, IStates> {
               />
             </SubActionWrapper>}
           {!disableAction &&
-            <Button text="Run" iconName="code" onClick={this.handleRunClick} />}
+            <Button text="Run" iconName="play" onClick={this.handleRunClick} />}
         </ActionWrapper>
       </HeaderWrapper>
     )
