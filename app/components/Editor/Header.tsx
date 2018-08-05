@@ -105,22 +105,22 @@ class Header extends React.Component<IProps & FreactalProps, IStates> {
           {!fullView &&
             !disableAction &&
             <SubActionWrapper>
-              <Button iconName="cog" onClick={this.toggleSettingsDialog} />
-              <DialogWrapper
-                iconName="inbox"
-                isOpen={this.state.showSettings}
-                onClose={this.toggleSettingsDialog}
-                title="Settings"
-              >
-                <DialogBody>
-                  <Settings />
-                </DialogBody>
-                {/* <DialogFooter>
-                  <DialogFooterActions>
-                    <Button onClick={this.toggleSettingsDialog} text="Close" />
-                  </DialogFooterActions>
-                </DialogFooter> */}
-              </DialogWrapper>
+              {/*<Button iconName="cog" onClick={this.toggleSettingsDialog} />*/}
+              {/*<DialogWrapper*/}
+              {/*iconName="inbox"*/}
+              {/*isOpen={this.state.showSettings}*/}
+              {/*onClose={this.toggleSettingsDialog}*/}
+              {/*title="Settings"*/}
+              {/*>*/}
+              {/*<DialogBody>*/}
+              {/*<Settings />*/}
+              {/*</DialogBody>*/}
+              {/*/!* <DialogFooter>*/}
+              {/*<DialogFooterActions>*/}
+              {/*<Button onClick={this.toggleSettingsDialog} text="Close" />*/}
+              {/*</DialogFooterActions>*/}
+              {/*</DialogFooter> *!/*/}
+              {/*</DialogWrapper>*/}
               <Button
                 iconName="application"
                 onClick={this.handleTerminalClick}
