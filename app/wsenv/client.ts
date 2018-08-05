@@ -2,7 +2,7 @@ import { SIGNAL_API_URL, WS_URL } from '../utils/constants'
 import { requestStore, eventStore } from './store'
 import { MESSAGE_TYPES } from 'wsenv/constants'
 import axios from 'axios'
-const ReconnectingWebSocket = require('reconnecting-websocket').default
+import DWebSocket from './dwebsocket'
 
 const wsUrlProvider = async () => {
   if (WS_URL) {
@@ -21,7 +21,7 @@ const wsUrlProvider = async () => {
   }
 }
 
-const client = new ReconnectingWebSocket(wsUrlProvider) as any
+const client = new DWebSocket(wsUrlProvider)
 
 client.sendEvent = (type: MESSAGE_TYPES, payload: { [k: string]: any }) => {
   waitForConnection(() => {
@@ -75,7 +75,7 @@ client.onclose = (ev: CloseEvent) => {
 }
 
 const waitForConnection = (callback: () => void, interval: number = 500) => {
-  if (client && client.readyState === 1) {
+  if (client && client.readyState() === 1) {
     callback()
   } else {
     // optional: implement backoff for interval here
