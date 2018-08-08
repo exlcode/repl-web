@@ -13,7 +13,7 @@ const wsUrlProvider = async () => {
       return resp.data.ws_endpoint
     } catch (err) {
       console.error(
-        'failed to get the client URL from the wsenv signalling server: ',
+        'Failed to get the client URL from the wsenv signalling server: ',
         err
       )
       return Promise.reject(err)
@@ -24,14 +24,19 @@ const wsUrlProvider = async () => {
 const client = new DWebSocket(wsUrlProvider)
 
 client.sendEvent = (type: MESSAGE_TYPES, payload: { [k: string]: any }) => {
-  waitForConnection(() => {
-    return client.send(
+  if (client && client.readyState() === 1) {
+    client.send(
       JSON.stringify({
         type: type,
         payload: payload
       })
     )
-  })
+  } else {
+    // optional: implement backoff for interval here
+    setTimeout(() => {
+      client.sendEvent(type, payload)
+    }, 300)
+  }
 }
 
 client.onmessage = (ev: MessageEvent) => {
@@ -60,29 +65,18 @@ client.onmessage = (ev: MessageEvent) => {
       })
       break
     default:
-      // console.error(`Invalid message type provided: ${type}`)
+      console.error(`Invalid message type provided: ${type}`)
       break
   }
 }
 
 client.onerror = (ev: ErrorEvent) => {
-  console.error(ev.message)
+  console.error('WEBSOCKET ERROR: ', ev.message)
 }
 
 client.onclose = (ev: CloseEvent) => {
-  // console.log(`CLOSED WEBSOCKETS CONNECTION: ${ev.reason}`)
-  // display message to user indicating that a page refresh is needed
-}
-
-const waitForConnection = (callback: () => void, interval: number = 500) => {
-  if (client && client.readyState() === 1) {
-    callback()
-  } else {
-    // optional: implement backoff for interval here
-    setTimeout(() => {
-      waitForConnection(callback, interval)
-    }, interval)
-  }
+  console.log(`CLOSED WEBSOCKETS CONNECTION: ${ev.reason}`)
+  // TODO display message to user indicating that a page refresh is needed
 }
 
 export default client

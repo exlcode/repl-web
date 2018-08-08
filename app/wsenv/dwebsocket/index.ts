@@ -60,6 +60,7 @@ export default class DWebSocket {
   }
 
   public send(data: any): void {
+    console.log('in dwebsocket sending data: ', data)
     return this._ws.send(data)
   }
 
