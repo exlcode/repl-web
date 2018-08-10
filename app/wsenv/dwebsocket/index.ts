@@ -65,14 +65,23 @@ export default class DWebSocket {
   }
 
   public protocol(): string {
+    if (!this._ws) {
+      return ""
+    }
     return this._ws.protocol
   }
 
   public readyState(): number {
+    if (!this._ws) {
+      return 0
+    }
     return this._ws.readyState
   }
 
   public url(): string {
+    if (!this._ws) {
+      return ""
+    }
     return this._ws.url
   }
 }
