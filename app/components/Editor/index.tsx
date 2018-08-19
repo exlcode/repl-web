@@ -16,10 +16,15 @@ import {
   toFileTreeNodes,
   getNodeWithFileId,
   getNodeWithFilePath,
-  stripUriPrefix
+  stripUriPrefix,
+  toWorkspaceFileRoot
 } from 'utils/files'
 import { injectState } from 'freactal'
-import { extractWSENVFiles, generateDefaultLSWorkspace } from 'utils/workspaces'
+import {
+  extractWSENVFiles,
+  generateDefaultLSWorkspace,
+  insertJavaObjectPath
+} from 'utils/workspaces'
 import { IFileTreeNode } from 'typings/client'
 import IDisposable = monaco.IDisposable
 
@@ -190,6 +195,18 @@ class Editor extends React.Component<IProps & FreactalProps, IState> {
         environmentKey: this.provider.envKey,
         filePath: addPathPrefix(this.provider.filePath, this.provider.envKey)
       })
+      if (window.parent) {
+        // TODO support more than just the Java workspace path wrapper
+        window.parent.postMessage(
+          JSON.stringify({
+            event: 'workspace.changed',
+            payload: insertJavaObjectPath(
+              toWorkspaceFileRoot(this.props.fileTree)
+            )
+          }),
+          '*'
+        )
+      }
     }
   }, 100)
 

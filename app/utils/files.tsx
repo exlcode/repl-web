@@ -70,6 +70,57 @@ export const generateFolderNode = () => ({
   isDir: true
 })
 
+export const toWorkspaceFileRoot = (
+  files: IFileTreeNode[]
+): WorkspaceFileRoot => {
+  if (!files || !files.length) {
+    return {}
+  }
+  const filesArr = files.map((file, idx): WorkspaceFile => {
+    const children = file.childNodes
+      ? file.childNodes.map(item => toWorkspaceFile(item)) as WorkspaceFile[]
+      : null
+    let childrenMap: WorkspaceFileRoot = {}
+    if (children) {
+      children.forEach(item => {
+        childrenMap[item.name] = item
+      })
+    }
+    return {
+      name: file.filePath,
+      contents: file.contents,
+      isDir: file.isDir,
+      children: childrenMap
+    }
+  })
+  let fileRoot: WorkspaceFileRoot = {}
+  filesArr.forEach(item => {
+    fileRoot[item.name] = item
+  })
+  return fileRoot
+}
+
+const toWorkspaceFile = (file: IFileTreeNode) => {
+  if (!file) {
+    return {} as WorkspaceFile
+  }
+  const children: WorkspaceFile[] | null = file.childNodes
+    ? file.childNodes.map(item => toWorkspaceFile(item)) as WorkspaceFile[]
+    : null
+  let childrenMap: WorkspaceFileRoot = {}
+  if (children) {
+    children.forEach(item => {
+      childrenMap[item.name] = item
+    })
+  }
+  return {
+    name: file.filePath,
+    contents: file.contents,
+    isDir: file.isDir,
+    children: childrenMap
+  }
+}
+
 export const toFileTreeNodes = (files: WorkspaceFileRoot): IFileTreeNode[] => {
   if (!files || !Object.keys(files).length) {
     return []
