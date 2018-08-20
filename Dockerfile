@@ -3,7 +3,6 @@ WORKDIR /app
 COPY . /app/
 # The .envdefault is what we use for production
 RUN cp .envdefault .env
-RUN npm install -g yarn
 RUN yarn install
 RUN yarn run production
 

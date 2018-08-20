@@ -200,6 +200,7 @@ class Editor extends React.Component<IProps & FreactalProps, IState> {
         window.parent.postMessage(
           JSON.stringify({
             event: 'workspace.changed',
+            workspaceId: workspaceId,
             payload: insertJavaObjectPath(
               toWorkspaceFileRoot(this.props.fileTree)
             )
