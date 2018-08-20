@@ -17,7 +17,8 @@ import {
   getNodeWithFileId,
   getNodeWithFilePath,
   stripUriPrefix,
-  toWorkspaceFileRoot
+  toWorkspaceFileRoot,
+  updateNodeTree
 } from 'utils/files'
 import { injectState } from 'freactal'
 import {
@@ -197,7 +198,19 @@ class Editor extends React.Component<IProps & FreactalProps, IState> {
         filePath: addPathPrefix(this.provider.filePath, this.provider.envKey)
       })
       if (window.parent) {
+        let fileTreeNodes = this.props.fileTree
+        this.props.effects.setFileTree(
+          updateNodeTree(
+            getNodeWithFilePath(this.provider.filePath, fileTreeNodes).id,
+            fileTreeNodes,
+            node => {
+              node.contents = value
+              return node
+            }
+          )
+        )
         // TODO support more than just the Java workspace path wrapper
+        console.log(this.props.fileTree)
         window.parent.postMessage(
           JSON.stringify({
             event: 'workspace.changed',
