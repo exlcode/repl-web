@@ -27,6 +27,7 @@ import {
 } from 'utils/workspaces'
 import { IFileTreeNode } from 'typings/client'
 import IDisposable = monaco.IDisposable
+import { getJsonParam } from '../../utils/queryString'
 
 const dmp = new DiffMatchPatch()
 
@@ -200,7 +201,9 @@ class Editor extends React.Component<IProps & FreactalProps, IState> {
         window.parent.postMessage(
           JSON.stringify({
             event: 'workspace.changed',
-            workspaceId: workspaceId,
+            workspaceId: getJsonParam('workspace')
+              ? getJsonParam('workspace').id
+              : workspaceId,
             payload: insertJavaObjectPath(
               toWorkspaceFileRoot(this.props.fileTree)
             )
